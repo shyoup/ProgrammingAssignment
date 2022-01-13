@@ -1,0 +1,32 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(32, 32, 41);
+}
+
+.App>* {
+  display: flex;
+}
+
+.App-header {
+  width: 100%;
+  height: 70px;
+  background-color: royalblue;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.App-tabs {
+  width: calc(100% - 400px);
+  height: 65px;
+  display: flex;
+  align-content: center;
+}
+
+.App-tree {
+  width: 400px;
+  height: calc(100% - 70px);
+  background-color: salmon;
+  display: flex;
+  justify-content: center;
+}
