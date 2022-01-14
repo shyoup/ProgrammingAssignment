@@ -1,8 +1,17 @@
+import React from 'react';
+import { inject, observer } from 'mobx-react';
 import './App.css';
 import EditorPageComponent from './fileeditor/EditorPageComponent'
-function App() {
+import createStore from 'store';
+import RootStore from 'store/RootStore';
+import StoreProvider from 'store/StoreProvider';
+
+const App: React.FC = () => {
+  const [store] = React.useState<RootStore>(createStore());
   return (
-    <EditorPageComponent />
+    <StoreProvider value={store}>
+      <EditorPageComponent />
+    </StoreProvider>
   );
 }
 

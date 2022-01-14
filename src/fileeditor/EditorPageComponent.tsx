@@ -1,20 +1,17 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import FileHandlerCompoenent from './FileHandlerComponent';
 import FileTreesCompoenent from './FileTreeComponent';
 import FileTabsCompoenent from './FileTabsComponent';
 
-interface Props {
-  children?: ReactNode;
-}
+const EditorPageComponent: React.FC = () => {
+  const [zipList, setZipList] = useState<string[]>([]);
 
-const EditorPageComponent: React.FC<Props> = (props: Props) => {
-  const { children } = props;
   return (
     <div className="App">
-      <FileHandlerCompoenent>
+      <FileHandlerCompoenent setZipList={setZipList}>
         <FileTabsCompoenent />
       </FileHandlerCompoenent>
-      <FileTreesCompoenent />
+      <FileTreesCompoenent zipList={zipList}/>
     </div>
   );
 };
