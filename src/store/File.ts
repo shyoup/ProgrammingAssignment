@@ -7,11 +7,21 @@ export enum FILE_TYPE {
   TEXT = 'txt',
 }
 
+export interface IZipFolder {
+  [key: string]: any
+}
+
+export interface IFolder {
+  id: string;
+  name: string;
+  children: Array<IFolder | PFile | FileModel>;
+}
+
 export interface PFile {
-  id: string
-  name: string
-  type: FILE_TYPE
-  content: string
+  id: string;
+  name: string;
+  type: FILE_TYPE;
+  content: string;
 }
 
 export interface IFile extends PFile{
@@ -19,9 +29,9 @@ export interface IFile extends PFile{
 }
 
 export class FileModel implements IFile {
-  @observable id: string;
-  @observable name: string;
-  @observable content: string;
+  id: string;
+  name: string;
+  content: string;
   type: FILE_TYPE;
   model: monaco.editor.ITextModel;
 

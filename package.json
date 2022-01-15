@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@mui/lab": "*",
     "@mui/material": "^5.2.8",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -14,7 +15,6 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "autobind-decorator": "^2.4.0",
-    "file-saver": "^2.0.5",
     "jszip": "^3.7.1",
     "mobx": "^6.3.12",
     "mobx-react": "^7.2.1",
@@ -53,9 +53,11 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-decorators": "^7.16.7",
+    "@types/file-saver": "^2.0.5",
     "@types/uuid": "^8.3.4",
     "core-decorators": "^0.20.0",
     "customize-cra": "^1.0.0",
+    "file-saver": "^2.0.5",
     "react-app-rewired": "^2.1.11"
   }
 }

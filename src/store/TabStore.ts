@@ -32,6 +32,12 @@ class TabStore {
     this.setOpenedTabList([...this.openedTabList, id]);
   }
 
+  @boundMethod
+  public deleteOpenFile(id: string): void {
+    const ret = this.openedTabList.filter(item => item !== id);
+    this.setOpenedTabList(ret);
+  }
+
   @action
   public setTabList(tab: string[]): void {
     this.tabList = tab;
@@ -53,10 +59,12 @@ class TabStore {
   }
 
   @action
-  public setCurTab(id: string): void {
+  public setCurTab(id: string, isFolder?: boolean): void {
     runInAction(() => {
-      this.curTab = id;
-      this.addOpenedList(id);
+      if(!isFolder) {
+        this.addOpenedList(id);
+        this.curTab = id;
+      }
     });
   }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import useStore from 'hooks/util/useStore';
+import JSZip from 'jszip';
 
 interface Props {
   children?: React.ReactNode;
@@ -11,6 +12,10 @@ const FileHandlerCompoenent: React.FC<Props> = (prop: Props) => {
   let file: File;
   const hiddenFileInput = React.useRef<HTMLInputElement>(null);
   const formElement = React.useRef<HTMLFormElement>(null);
+
+  const downloadClick = () => {
+    fileStore.downloadZipFile();
+  };
 
   const onFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || !formElement.current) {
@@ -46,6 +51,7 @@ const FileHandlerCompoenent: React.FC<Props> = (prop: Props) => {
           hidden
         />
       </form>
+      <button onClick={downloadClick}> Download</button>
       {children}
     </div>
   );
