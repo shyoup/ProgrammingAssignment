@@ -1,8 +1,13 @@
 import React from 'react';
 import useStore from 'hooks/util/useStore';
 
-const FileHandlerCompoenent: React.FC = () => {
-  const { fileStore } = useStore();
+interface Props {
+  children?: React.ReactNode;
+}
+
+const FileHandlerCompoenent: React.FC<Props> = (prop: Props) => {
+  const { fileStore, tabStore } = useStore();
+  const { children } = prop;
   let file: File;
   const hiddenFileInput = React.useRef<HTMLInputElement>(null);
   const formElement = React.useRef<HTMLFormElement>(null);
@@ -27,7 +32,15 @@ const FileHandlerCompoenent: React.FC = () => {
         name="document"
         encType="multipart/form-data"
         method="post"
-        onSubmit={(event) => fileStore.onSubmit(file, event)}
+        onSubmit={(event) => {
+          fileStore.onSubmit(file, event)
+          .then((ret) => {
+            if (typeof ret === 'string') tabStore.addList(ret);
+          })
+          .catch(() => {
+            console.log('hi');
+          });
+        }}
         ref={formElement}
       >
         <input
@@ -39,6 +52,7 @@ const FileHandlerCompoenent: React.FC = () => {
           hidden
         />
       </form>
+      {children}
     </div>
   );
 };

@@ -1,23 +1,23 @@
 import React from 'react';
 import { Tab, Tabs } from '@mui/material'
+import useStore from 'hooks/util/useStore';
 
 const FileTabsCompoenent: React.FC = () => {
-  const [value, setValue] = React.useState('one');
+  const { fileStore, tabStore } = useStore();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
   };
   return (
     <div className="App-tabs">
       <Tabs
-        value={value}
+        value={tabStore.getCurTab()}
         onChange={handleChange}
         textColor="secondary"
         indicatorColor="secondary"
       >
-        <Tab value="one" label="Item One" />
-        <Tab value="two" label="Item Two" />
-        <Tab value="three" label="Item Three" />
+        {tabStore.getOpenedTabList().map(id => (
+          <Tab key={id} value={id} label={fileStore.getFileNameById(id)} />
+        ))}
       </Tabs>
     </div>
   );

@@ -7,21 +7,36 @@ class TabStore {
 
   @observable
   private tabList: string[];
+
+  @observable
+  private openedTabList: string[];
   
   public constructor() {
     makeObservable(this);
     this.curTab = '';
     this.tabList = [];
+    this.openedTabList = [];
   }
-
 
   @action
   public addList(id: string): void {
-    for (const tab of this.tabList) {
+    runInAction(() => {
+      for (const tab of this.tabList) {
+        if (tab === id) {
+          return;
+        }
+      }
+      this.setTabList([...this.tabList, id]);
+    });
+  }
+
+  @action
+  public addOpenedList(id: string): void {
+    for (const tab of this.openedTabList) {
       if (tab === id) {
         return;
       } else {
-        this.setTabList([...this.tabList, id]);
+        this.setOpenedTabList([...this.openedTabList, id]);
       }
     }
   }
@@ -33,14 +48,22 @@ class TabStore {
 
   @boundMethod
   public getTabList(): string[] {
-    console.log(this.tabList);
     return this.tabList;
+  }
+
+  @action
+  public setOpenedTabList(tab: string[]): void {
+    this.openedTabList = tab;
+  }
+
+  @boundMethod
+  public getOpenedTabList(): string[] {
+    return this.openedTabList;
   }
 
   @action
   public setCurTab(id: string): void {
     this.curTab = id;
-    this.addList(id);
   }
 
   @boundMethod

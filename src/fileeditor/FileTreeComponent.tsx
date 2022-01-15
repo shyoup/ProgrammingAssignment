@@ -7,6 +7,7 @@ const FileTreesCompoenent: React.FC = () => {
   const { fileStore, tabStore } = useStore();
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     tabStore.setCurTab(newValue);
+    fileStore.changeTreeFile(newValue);
   };
 
   return (
@@ -18,8 +19,8 @@ const FileTreesCompoenent: React.FC = () => {
         textColor="secondary"
         indicatorColor="secondary"
       >
-        {fileStore.getFilesList().map(item => (
-          <Tab key={item.id} value={item.id} label={item.name} />
+        {tabStore.getTabList().map(id => (
+          <Tab key={id} value={id} label={fileStore.getFileNameById(id)} />
         ))}
       </Tabs>
     </div>

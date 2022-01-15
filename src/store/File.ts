@@ -8,14 +8,14 @@ export enum FILE_TYPE {
 }
 
 export interface PFile {
+  id: string
   name: string
   type: FILE_TYPE
   content: string
 }
 
 export interface IFile extends PFile{
-  id: string
-  model: monaco.editor.IEditorModel | null;
+  model: monaco.editor.IEditorModel;
 }
 
 export class FileModel implements IFile {
@@ -23,9 +23,9 @@ export class FileModel implements IFile {
   @observable name: string;
   @observable content: string;
   type: FILE_TYPE;
-  model: monaco.editor.ITextModel | null;
+  model: monaco.editor.ITextModel;
 
-  constructor(item: IFile) {
+  constructor(item: PFile) {
     this.id = item.id;
     this.name = item.name;
     this.content = item.content;
@@ -34,7 +34,7 @@ export class FileModel implements IFile {
   }
 
   @boundMethod
-  public getModel(): monaco.editor.ITextModel | null {
+  public getModel(): monaco.editor.ITextModel {
     return this.model;
   }
 }
