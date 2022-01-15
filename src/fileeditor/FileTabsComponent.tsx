@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tab, Tabs } from '@mui/material'
 import useStore from 'hooks/util/useStore';
+import { observer } from 'mobx-react';
 
 const FileTabsCompoenent: React.FC = () => {
   const { fileStore, tabStore } = useStore();
@@ -22,4 +23,4 @@ const FileTabsCompoenent: React.FC = () => {
     </div>
   );
 };
-export default FileTabsCompoenent;
+export default observer(FileTabsCompoenent);

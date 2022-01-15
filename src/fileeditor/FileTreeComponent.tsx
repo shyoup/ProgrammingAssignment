@@ -7,7 +7,7 @@ const FileTreesCompoenent: React.FC = () => {
   const { fileStore, tabStore } = useStore();
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     tabStore.setCurTab(newValue);
-    fileStore.changeTreeFile(newValue);
+    fileStore.openFile(newValue);
   };
 
   return (

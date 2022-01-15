@@ -33,13 +33,7 @@ const FileHandlerCompoenent: React.FC<Props> = (prop: Props) => {
         encType="multipart/form-data"
         method="post"
         onSubmit={(event) => {
-          fileStore.onSubmit(file, event)
-          .then((ret) => {
-            if (typeof ret === 'string') tabStore.addList(ret);
-          })
-          .catch(() => {
-            console.log('hi');
-          });
+          fileStore.onSubmit(file, event, tabStore.addList);
         }}
         ref={formElement}
       >

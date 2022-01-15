@@ -68,7 +68,7 @@ class FileStore {
   }
 
   @boundMethod
-  public async onSubmit(file: File, event: React.FormEvent<HTMLFormElement>): Promise<string | boolean> {
+  public async onSubmit(file: File, event: React.FormEvent<HTMLFormElement>, callback?: (id: string) => void): Promise<void> {
     event.preventDefault();
     JSZip.loadAsync(file).then((zip) => {
       Object.keys(zip.files).forEach((filename) => {
@@ -81,7 +81,7 @@ class FileStore {
           }
           runInAction(() => {
             this.createFile(newFile);
-            return newFile.id;
+            if (callback) callback(newFile.id);
           });
         })
       })
@@ -89,7 +89,7 @@ class FileStore {
   };
 
   @boundMethod
-  public changeTreeFile(id: string): void {  // side click
+  public openFile(id: string): void {  // side click
     const model = this.getFileById(id)?.getModel();
     if (model) this.editor?.setModel(model);
   }

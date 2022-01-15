@@ -18,27 +18,18 @@ class TabStore {
     this.openedTabList = [];
   }
 
-  @action
+  @boundMethod
   public addList(id: string): void {
-    runInAction(() => {
-      for (const tab of this.tabList) {
-        if (tab === id) {
-          return;
-        }
-      }
-      this.setTabList([...this.tabList, id]);
-    });
+    const ret = this.tabList.find(item => item === id);
+    if (ret) return;
+    this.setTabList([...this.tabList, id]);
   }
 
-  @action
+  @boundMethod
   public addOpenedList(id: string): void {
-    for (const tab of this.openedTabList) {
-      if (tab === id) {
-        return;
-      } else {
-        this.setOpenedTabList([...this.openedTabList, id]);
-      }
-    }
+    const ret = this.openedTabList.find(item => item === id);
+    if (ret) return;
+    this.setOpenedTabList([...this.openedTabList, id]);
   }
 
   @action
@@ -63,7 +54,10 @@ class TabStore {
 
   @action
   public setCurTab(id: string): void {
-    this.curTab = id;
+    runInAction(() => {
+      this.curTab = id;
+      this.addOpenedList(id);
+    });
   }
 
   @boundMethod
