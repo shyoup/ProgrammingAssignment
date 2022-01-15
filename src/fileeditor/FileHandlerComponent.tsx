@@ -1,32 +1,17 @@
-import JSZip from 'jszip';
-import React, { ReactNode } from 'react';
+import React from 'react';
+import useStore from 'hooks/util/useStore';
 
-interface Props {
-  children?: ReactNode;
-}
-
-const FileHandlerCompoenent: React.FC<Props> = (props: Props) => {
+const FileHandlerCompoenent: React.FC = () => {
+  const { fileStore } = useStore();
   let file: File;
-  const { children } = props;
   const hiddenFileInput = React.useRef<HTMLInputElement>(null);
   const formElement = React.useRef<HTMLFormElement>(null);
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    JSZip.loadAsync(file).then((zip) => {
-      Object.keys(zip.files).forEach((filename) => {
-        zip.files[filename].async('string').then((fileData) => {
-          console.log(fileData);
-        })
-      })
-    })
-  };
 
   const onFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || !formElement.current) {
       return;
     }
-    const [files] = event.target.files;
+    const [files]: FileList = event.target.files;
     file = files;
     formElement.current.requestSubmit();
   };
@@ -42,7 +27,7 @@ const FileHandlerCompoenent: React.FC<Props> = (props: Props) => {
         name="document"
         encType="multipart/form-data"
         method="post"
-        onSubmit={onSubmit}
+        onSubmit={(event) => fileStore.onSubmit(file, event)}
         ref={formElement}
       >
         <input
@@ -54,7 +39,6 @@ const FileHandlerCompoenent: React.FC<Props> = (props: Props) => {
           hidden
         />
       </form>
-      {children}
     </div>
   );
 };

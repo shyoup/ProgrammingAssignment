@@ -1,6 +1,5 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
-import './App.css';
+import 'App.css';
 import EditorPageComponent from './fileeditor/EditorPageComponent'
 import createStore from 'store';
 import RootStore from 'store/RootStore';

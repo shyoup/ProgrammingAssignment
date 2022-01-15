@@ -8,10 +8,13 @@
   display: flex;
 }
 
+.App-contents {
+  height: calc(100% - 70px);
+}
+
 .App-header {
   width: 100%;
   height: 70px;
-  background-color: royalblue;
   justify-content: flex-end;
   align-items: flex-end;
 }
@@ -24,9 +27,11 @@
 }
 
 .App-tree {
-  width: 400px;
-  height: calc(100% - 70px);
-  background-color: salmon;
+  width: 350px;
   display: flex;
   justify-content: center;
+}
+
+.Editor {
+	width: calc(100% - 350px);
 }

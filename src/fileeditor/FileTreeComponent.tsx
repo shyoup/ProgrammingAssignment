@@ -1,30 +1,28 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Tab, Tabs } from '@mui/material'
+import useStore from 'hooks/util/useStore';
+import { observer } from 'mobx-react';
 
-interface Props {
-  children?: ReactNode;
-}
-
-const FileTreesCompoenent: React.FC<Props> = (props: Props) => {
-  const [value, setValue] = React.useState('one');
-
+const FileTreesCompoenent: React.FC = () => {
+  const { fileStore, tabStore } = useStore();
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    tabStore.setCurTab(newValue);
   };
+
   return (
     <div className="App-tree">
       <Tabs
         orientation="vertical"
-        value={value}
+        value={tabStore.getCurTab()}
         onChange={handleChange}
         textColor="secondary"
         indicatorColor="secondary"
       >
-        <Tab value="one" label="Item One" />
-        <Tab value="two" label="Item Two" />
-        <Tab value="three" label="Item Three" />
+        {fileStore.getFilesList().map(item => (
+          <Tab key={item.id} value={item.id} label={item.name} />
+        ))}
       </Tabs>
     </div>
   );
 };
-export default FileTreesCompoenent;
+export default observer(FileTreesCompoenent);
