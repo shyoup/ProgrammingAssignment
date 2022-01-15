@@ -1,6 +1,5 @@
 import React from 'react';
 import useStore from 'hooks/util/useStore';
-import JSZip from 'jszip';
 
 interface Props {
   children?: React.ReactNode;
