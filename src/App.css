@@ -32,6 +32,10 @@
   justify-content: center;
 }
 
-.Editor {
+.Editor, .ImageViewer {
 	width: calc(100% - 350px);
+}
+
+.hide {
+  display: none;
 }

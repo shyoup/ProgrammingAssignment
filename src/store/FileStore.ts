@@ -23,6 +23,9 @@ class FileStore {
   @observable
   private folderList: IFolder[];
 
+  @observable
+  private openedFileType: FILE_TYPE;
+
   private originName: string;
 
   private editor: null | monaco.editor.IStandaloneCodeEditor;
@@ -34,6 +37,17 @@ class FileStore {
     this.folderList = [];
     this.editor = null;
     this.originName = '';
+    this.openedFileType = FILE_TYPE.TEXT;
+  }
+
+  @action
+  public setOpenedFileType(type: FILE_TYPE) {
+    this.openedFileType = type;
+  }
+
+  @boundMethod
+  public getOpenedFileType() {
+    return this.openedFileType;
   }
 
   @action
@@ -137,6 +151,7 @@ class FileStore {
     JSZip.loadAsync(file).then((zip) => {
       Object.keys(zip.files).forEach((filename) => {
         const uid = uuid();
+        const fileType = this.checkType(filename);
         if(zip.files[filename].dir) {
           const newFolder: IFolder = {
             id: uid,
@@ -149,12 +164,30 @@ class FileStore {
             if (parentFolder) parentFolder.children.push(newFolder);
             else this.addFolder(newFolder);
           })
+        } else if(fileType === FILE_TYPE.IMAGE) {
+          zip.files[filename].async('base64').then((fileData) => {
+            console.log(fileData);
+            var img = new Image;
+            img.src = "data:png;base64," + fileData;
+            const newFile: PFile = {
+              id: uid,
+              name: filename,
+              type: fileType,
+              content: fileData,
+            }
+            const parentFolder = this.findParentFolder(filename);
+            runInAction(() => {
+              parentFolder?.children.push(newFile);
+              this.addFile(newFile);
+              if (callback) callback(newFile.id);
+            });
+          })
         } else {
           zip.files[filename].async('string').then((fileData) => {
             const newFile: PFile = {
               id: uid,
               name: filename,
-              type: this.checkType(filename),
+              type: fileType,
               content: fileData,
             }
             const parentFolder = this.findParentFolder(filename);
@@ -171,8 +204,20 @@ class FileStore {
 
   @boundMethod
   public openFile(id: string): void {  // side click
-    const model = this.getFileById(id)?.getModel();
-    if (model) this.editor?.setModel(model);
+    const file = this.getFileById(id);
+    if (file) {
+      if (file.type === FILE_TYPE.TEXT) {
+        this.setOpenedFileType(FILE_TYPE.TEXT);
+        const model = file.getModel();
+        this.editor?.setModel(model);
+        document.getElementsByClassName("Editor")[0].classList.remove("hide");
+        document.getElementsByClassName("ImageViewer")[0].classList.add("hide");
+      } else {
+        this.setOpenedFileType(FILE_TYPE.IMAGE);
+        document.getElementsByClassName("Editor")[0].classList.add("hide");
+        document.getElementsByClassName("ImageViewer")[0].classList.remove("hide");
+      }
+    }
   }
 
   @boundMethod
