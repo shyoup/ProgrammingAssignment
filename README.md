@@ -2,7 +2,8 @@
 Frontend Team PA - Advanced
 
 [Start]
-- npm run start
+git reset --hard 8bca4c003a566f97686192a8b07f774cdcf630d9
+npm run start
 
 
 
