@@ -166,9 +166,7 @@ class FileStore {
           })
         } else if(fileType === FILE_TYPE.IMAGE) {
           zip.files[filename].async('base64').then((fileData) => {
-            console.log(fileData);
-            var img = new Image;
-            img.src = "data:png;base64," + fileData;
+            fileData = "data:image/png;base64," + fileData;
             const newFile: PFile = {
               id: uid,
               name: filename,
@@ -211,11 +209,9 @@ class FileStore {
         const model = file.getModel();
         this.editor?.setModel(model);
         document.getElementsByClassName("Editor")[0].classList.remove("hide");
-        document.getElementsByClassName("ImageViewer")[0].classList.add("hide");
       } else {
         this.setOpenedFileType(FILE_TYPE.IMAGE);
         document.getElementsByClassName("Editor")[0].classList.add("hide");
-        document.getElementsByClassName("ImageViewer")[0].classList.remove("hide");
       }
     }
   }
