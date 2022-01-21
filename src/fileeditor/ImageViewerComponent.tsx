@@ -14,6 +14,8 @@ const ImageViewerComponent: React.FC = () => {
     canvasWidth = canvasRef.current.width;
     canvasHeight = canvasRef.current.height;
 
+    console.log(canvasWidth, canvasHeight);
+
     const ctx = canvasRef.current.getContext("2d");
     if (!ctx) return;
     const image = new Image();
@@ -23,13 +25,15 @@ const ImageViewerComponent: React.FC = () => {
     image.onload = function() {
       imageWidth = image.width;
       imageHeight = image.height;
+      
+      const wRatio = canvasWidth / imageWidth;
+      const hRatio = canvasHeight / imageHeight;
+      const ratio = Math.max( wRatio, hRatio);
 
-      ctx.drawImage(image,
-        (canvasWidth - imageWidth)/2,
-        (canvasHeight-imageHeight)/2
-        // canvasWidth * 2,
-        // canvasHeight * 2
-      );
+      image.width *= ratio;
+      image.height *= ratio;
+
+      ctx.drawImage(image, 0, 0, canvasWidth, canvasHeight);  
     };
   }, []);
 
