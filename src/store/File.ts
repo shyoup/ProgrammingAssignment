@@ -1,5 +1,4 @@
 import { boundMethod } from "autobind-decorator";
-import { observable } from "mobx";
 import * as monaco from 'monaco-editor';
 
 export enum FILE_TYPE {
@@ -14,14 +13,21 @@ export interface IZipFolder {
 export interface IFolder {
   id: string;
   name: string;
-  children: Array<IFolder | PFile | FileModel>;
+  children: Array<IFolder | PFile | FileModel | PImage>;
 }
 
 export interface PFile {
   id: string;
   name: string;
-  type: FILE_TYPE;
+  type: string;
   content: string;
+}
+
+export interface PImage {
+  id: string;
+  name: string;
+  type: string;
+  content: Blob;
 }
 
 export interface IFile extends PFile{
@@ -32,7 +38,7 @@ export class FileModel implements IFile {
   id: string;
   name: string;
   content: string;
-  type: FILE_TYPE;
+  type: string;
   model: monaco.editor.ITextModel;
 
   constructor(item: PFile) {
@@ -46,5 +52,24 @@ export class FileModel implements IFile {
   @boundMethod
   public getModel(): monaco.editor.ITextModel {
     return this.model;
+  }
+}
+
+export class ImageModel implements PImage {
+  id: string;
+  name: string;
+  type: string;
+  content: Blob;
+
+  constructor(item: PImage) {
+    this.id = item.id;
+    this.name = item.name;
+    this.content = item.content;
+    this.type = item.type;
+  }
+
+  @boundMethod
+  public getContent(): Blob {
+    return this.content;
   }
 }

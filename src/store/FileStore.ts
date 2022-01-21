@@ -2,7 +2,7 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 import { boundMethod } from 'autobind-decorator';
 import * as monaco from 'monaco-editor';
 import { v4 as uuid } from 'uuid';
-import { PFile, IFile, FileModel, FILE_TYPE, IFolder, IZipFolder } from "./File";
+import { PFile, IFile, FileModel, IFolder, IZipFolder, PImage, FILE_TYPE, ImageModel } from "./File";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import React from "react";
@@ -15,7 +15,7 @@ export interface TreeInfo {
 
 class FileStore {
   @observable
-  private files: FileModel[];
+  private files: Array<FileModel | ImageModel>;
 
   @observable
   private folders: IFolder[];
@@ -61,12 +61,12 @@ class FileStore {
   }
 
   @action
-  public setFileList(fileList: FileModel[]): void {
+  public setFileList(fileList: Array<FileModel | ImageModel>): void {
     this.files = fileList;
   }
 
   @boundMethod
-  public getFilesList(): IFile[] {
+  public getFilesList(): Array<FileModel | ImageModel> {
     return this.files;
   }
 
@@ -76,7 +76,7 @@ class FileStore {
   }
 
   @boundMethod
-  public getFoldersList(): IFolder[] {
+  public getFoldersList(): IFolder[] | PImage[] {
     return this.folders;
   }
 
@@ -90,11 +90,11 @@ class FileStore {
     return this.folderList;
   }
 
-  public getFirstFile(): IFile {
+  public getFirstFile(): IFile | PImage {
     return this.files[0];
   }
 
-  public getFileById(id: string): FileModel | null {
+  public getFileById(id: string): FileModel | ImageModel | null {
     const ret = [...this.files].find(file => file.id === id);
     if (ret) return ret;
     else return null;
@@ -115,6 +115,19 @@ class FileStore {
         name: file.name,
         type: file.type,
         content: file.content,
+      });
+      this.setFileList([...this.files, newFile]);
+    });
+  }
+
+  @action
+  public addImage(image: PImage): void {
+    runInAction(() => {
+      const newFile = new ImageModel({
+        id: image.id,
+        name: image.name,
+        type: image.type,
+        content: image.content,
       });
       this.setFileList([...this.files, newFile]);
     });
@@ -165,18 +178,19 @@ class FileStore {
             else this.addFolder(newFolder);
           })
         } else if(fileType === FILE_TYPE.IMAGE) {
-          zip.files[filename].async('base64').then((fileData) => {
-            fileData = "data:image/png;base64," + fileData;
-            const newFile: PFile = {
+          zip.files[filename].async('arraybuffer').then((fileData) => {
+            var buffer = new Uint8Array(fileData);
+            var blob = new Blob([buffer.buffer]);
+            const newFile: PImage = {
               id: uid,
               name: filename,
               type: fileType,
-              content: fileData,
+              content: blob,
             }
             const parentFolder = this.findParentFolder(filename);
             runInAction(() => {
               parentFolder?.children.push(newFile);
-              this.addFile(newFile);
+              this.addImage(newFile);
               if (callback) callback(newFile.id);
             });
           })
@@ -204,7 +218,7 @@ class FileStore {
   public openFile(id: string): void {  // side click
     const file = this.getFileById(id);
     if (file) {
-      if (file.type === FILE_TYPE.TEXT) {
+      if (file instanceof FileModel) {
         this.setOpenedFileType(FILE_TYPE.TEXT);
         const model = file.getModel();
         this.editor?.setModel(model);
