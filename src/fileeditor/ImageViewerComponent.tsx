@@ -1,8 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import useStore from 'hooks/util/useStore';
 import { ImageModel } from 'store/File';
+import { observer } from 'mobx-react';
 
-const ImageViewerComponent: React.FC = () => {
+interface Props {
+  id: string;
+}
+
+const ImageViewerComponent: React.FC<Props> = (prop: Props) => {
+  const { id } = prop;
   const { tabStore, fileStore } = useStore();
 
   useEffect(() => {
@@ -22,8 +28,6 @@ const ImageViewerComponent: React.FC = () => {
           image.width *= ratio;
           image.height *= ratio;
         } else {
-          console.log(image.width);
-          console.log(image.height);
           image.style.width = `${image.width}px`;
           image.style.height = `${image.height}px`;
         }
@@ -31,8 +35,8 @@ const ImageViewerComponent: React.FC = () => {
       };
       image.src = URL.createObjectURL(contents);
     }
-  }, []);
+  }, [id]);
 
-  return <div className="ImageViewer" />;
+  return <div className="ImageViewer" key={id} />;
 };
 export default ImageViewerComponent;

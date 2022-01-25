@@ -9,7 +9,7 @@ import { FILE_TYPE } from 'store/File';
 import ImageViewerComponent from './ImageViewerComponent';
 
 const EditorPageComponent: React.FC = () => {
-  const { fileStore } = useStore();
+  const { fileStore, tabStore } = useStore();
   return (
     <div className="App">
       <FileHandlerCompoenent>
@@ -17,8 +17,8 @@ const EditorPageComponent: React.FC = () => {
       </FileHandlerCompoenent>
       <div className="App-contents">
         <FileTreesCompoenent />
-        {fileStore.getFilesList().length > 0 && <MonacoEditorComponent />}
-        {fileStore.getFilesList().length > 0 && fileStore.getOpenedFileType() === FILE_TYPE.IMAGE && <ImageViewerComponent />}
+        {tabStore.getCurTab() && fileStore.getOpenedFileType() === FILE_TYPE.TEXT && <MonacoEditorComponent />}
+        {tabStore.getCurTab() && fileStore.getOpenedFileType() === FILE_TYPE.IMAGE && <ImageViewerComponent id={tabStore.getCurTab()} />}
       </div>
     </div>
   );
