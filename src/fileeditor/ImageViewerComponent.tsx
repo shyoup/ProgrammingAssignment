@@ -21,6 +21,11 @@ const ImageViewerComponent: React.FC = () => {
   
           image.width *= ratio;
           image.height *= ratio;
+        } else {
+          console.log(image.width);
+          console.log(image.height);
+          image.style.width = `${image.width}px`;
+          image.style.height = `${image.height}px`;
         }
         viewer.appendChild(image);
       };
