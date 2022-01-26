@@ -254,6 +254,7 @@ class FileStore {
 
   @boundMethod
   public downloadZipFile(): void {
+    // TODO. content data 가 다운로드 되지않는 이슈
     const zip = new JSZip();
     let folderObj: IZipFolder = {};
     this.folderList.map(folder => {
