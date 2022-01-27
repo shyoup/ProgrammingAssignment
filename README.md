@@ -3,8 +3,8 @@ Frontend Team PA - Advanced
 
 [Start]
 - git reset --hard 8bca4c003a566f97686192a8b07f774cdcf630d9
+- npm install
 - npm run start
-
 
 
 React + TypeScript + Mobx 를 사용했습니다.
@@ -43,3 +43,6 @@ model 정보는 monaco의 model 정보 입니다.
 
 기간 (22.01.16 pm12시) 내에 제출한 커밋은 8bca4c003a566f97686192a8b07f774cdcf630d9 입니다.
 이후 커밋은 추가적으로 마무리 짓기 위해 작업한 내용들입니다.
+
+220127 updated
+다운로드 시 변경된 텍스트가 변경되지 않는 버그 수정 중
