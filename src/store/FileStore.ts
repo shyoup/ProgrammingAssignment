@@ -231,6 +231,16 @@ class FileStore {
   }
 
   @boundMethod
+  public saveFile(id: string): void {
+    const file = this.getFileById(id);
+    if (file) {
+      if (file instanceof FileModel) {
+        if (this.editor) file.content = this.editor.getValue();
+      }
+    }
+  }
+
+  @boundMethod
   public closeFile(): void {
     const model = monaco.editor.createModel('', 'javascript');
     this.editor?.setModel(model);
