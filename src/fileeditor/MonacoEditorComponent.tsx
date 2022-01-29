@@ -6,7 +6,18 @@ import { FileModel } from 'store/File';
 const MonacoEditorComponent: React.FC = () => {
   const { fileStore, tabStore } = useStore();
   const divEl = useRef<HTMLDivElement>(null);
+	let timer: NodeJS.Timeout;
 	useEffect(() => {
+		if (divEl) {
+			if (timer) {
+				clearTimeout(timer);
+			}
+			divEl.current?.addEventListener('keyup', () => {
+				setTimeout(() => {
+					fileStore.saveFile(tabStore.getCurTab());
+				}, 3000);
+			});
+		}
 		const curFile = fileStore.getFileById(tabStore.getCurTab());
 		if (curFile instanceof FileModel) {
 			const tmpmodel = curFile.model;

@@ -29,6 +29,7 @@ const FileTabsCompoenent: React.FC = () => {
               onClick={(event) => {
                 event.stopPropagation();
                 tabStore.deleteOpenFile(id);
+                fileStore.saveFile(id);
                 fileStore.closeFile();
               }}
               />}

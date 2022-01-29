@@ -46,7 +46,7 @@ export class FileModel implements IFile {
     this.name = item.name;
     this.content = item.content;
     this.type = item.type;
-    this.model = monaco.editor.createModel(this.content, 'html');
+    this.model = monaco.editor.createModel(this.content, 'javascript');
   }
 
   @boundMethod
