@@ -242,6 +242,9 @@ class FileStore {
 
   @boundMethod
   public closeFile(): void {
+    if (this.openedFileType === FILE_TYPE.IMAGE) document.getElementsByClassName("Editor")[0].classList.remove("hide");
+    else document.getElementsByClassName("Editor")[0].classList.add("hide");
+
     const model = monaco.editor.createModel('', 'javascript');
     this.editor?.setModel(model);
   }
