@@ -7,7 +7,15 @@ import CloseButtonComponent from 'common/CloseButtonComponent';
 const FileTabsCompoenent: React.FC = () => {
   const { fileStore, tabStore } = useStore();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleClose = (event: React.MouseEvent, id: string) => {
+    event.stopPropagation();
+    const ret = tabStore.deleteOpenFile(id);
+    fileStore.saveFile(id);
+    if (ret) handleChange(ret);
+    else fileStore.closeFile();
+  };
+
+  const handleChange = (newValue: string) => {
     tabStore.setCurTab(newValue);
     fileStore.openFile(newValue);
   };
@@ -15,7 +23,9 @@ const FileTabsCompoenent: React.FC = () => {
     <div className="App-tabs">
       <Tabs
         value={tabStore.getCurTab()}
-        onChange={handleChange}
+        onChange={(event, index) => {
+          handleChange(index);
+        }}
       >
         {tabStore.getOpenedTabList().map(id => (
           <Tab
@@ -27,10 +37,7 @@ const FileTabsCompoenent: React.FC = () => {
             }}
             icon={<CloseButtonComponent 
               onClick={(event) => {
-                event.stopPropagation();
-                tabStore.deleteOpenFile(id);
-                fileStore.saveFile(id);
-                fileStore.closeFile();
+                handleClose(event, id);
               }}
               />}
             iconPosition="end"

@@ -33,9 +33,16 @@ class TabStore {
   }
 
   @boundMethod
-  public deleteOpenFile(id: string): void {
+  public deleteOpenFile(id: string): string {
+    const index = this.openedTabList.indexOf(id);
     const ret = this.openedTabList.filter(item => item !== id);
     this.setOpenedTabList(ret);
+    if (index > -1) {
+      if (this.openedTabList[index]) return this.openedTabList[index];
+      else {
+        if (this.openedTabList[index-1]) return this.openedTabList[index-1];      }
+    }
+    return '';
   }
 
   @action
