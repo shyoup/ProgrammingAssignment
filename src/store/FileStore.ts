@@ -6,6 +6,7 @@ import { PFile, IFile, FileModel, IFolder, IZipFolder, PImage, FILE_TYPE, ImageM
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import React from "react";
+import { STRING_RES } from 'common/string/StringResource';
 
 export interface TreeInfo {
   id: string;
@@ -160,7 +161,7 @@ class FileStore {
   @boundMethod
   public async onSubmit(file: File, event: React.FormEvent<HTMLFormElement>, callback?: (id: string) => void): Promise<void> {
     if (this.folderList.length > 0) {
-      let ret = window.confirm('파일을 교체하시겠습니까?');
+      let ret = window.confirm(STRING_RES.ADD_FILE_EXCEPTION);
       if (ret) this.setFoldersList([]);
       else return;
     }
@@ -276,7 +277,7 @@ class FileStore {
     const zip = new JSZip();
     let folderObj: IZipFolder = {};
     if (this.folderList.length === 0) {
-      alert('추가된 파일이 없습니다.');
+      alert(STRING_RES.DOWNLOAD_EXCEPTION);
       return;
     }
     this.folderList.map(folder => {
