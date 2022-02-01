@@ -159,6 +159,11 @@ class FileStore {
 
   @boundMethod
   public async onSubmit(file: File, event: React.FormEvent<HTMLFormElement>, callback?: (id: string) => void): Promise<void> {
+    if (this.folderList.length > 0) {
+      let ret = window.confirm('파일을 교체하시겠습니까?');
+      if (ret) this.setFoldersList([]);
+      else return;
+    }
     event.preventDefault();
     this.originName = file.name;
     JSZip.loadAsync(file).then((zip) => {
@@ -270,6 +275,10 @@ class FileStore {
     // TODO. content data 가 다운로드 되지않는 이슈
     const zip = new JSZip();
     let folderObj: IZipFolder = {};
+    if (this.folderList.length === 0) {
+      alert('추가된 파일이 없습니다.');
+      return;
+    }
     this.folderList.map(folder => {
       folderObj[folder.name] = zip.folder(folder.name);
     })
