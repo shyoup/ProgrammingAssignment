@@ -46,3 +46,6 @@ model 정보는 monaco의 model 정보 입니다.
 
 220127 updated
 다운로드 시 변경된 텍스트가 변경되지 않는 버그 수정 중
+
+220203 updated
+GUI 변경 작업 진행 중
