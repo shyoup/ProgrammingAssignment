@@ -19,7 +19,7 @@ export interface IFolder {
 export interface PFile {
   id: string;
   name: string;
-  type: string;
+  type: monaco.languages.ILanguageExtensionPoint[];
   content: string;
 }
 
@@ -38,14 +38,14 @@ export class FileModel implements IFile {
   id: string;
   name: string;
   content: string;
-  type: string;
+  type: monaco.languages.ILanguageExtensionPoint[];
   model: monaco.editor.ITextModel;
 
   constructor(item: PFile) {
     this.id = item.id;
     this.name = item.name;
     this.content = item.content;
-    this.type = item.type;
+    this.type = monaco.languages.getLanguages();
     this.model = monaco.editor.createModel(this.content, 'javascript');
   }
 

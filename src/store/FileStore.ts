@@ -205,7 +205,7 @@ class FileStore {
             const newFile: PFile = {
               id: uid,
               name: filename,
-              type: fileType,
+              type: monaco.languages.getLanguages(),
               content: fileData,
             }
             const parentFolder = this.findParentFolder(filename);

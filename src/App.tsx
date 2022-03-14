@@ -1,6 +1,6 @@
 import React from 'react';
 import 'App.css';
-import EditorPageComponent from './fileeditor/EditorPageComponent'
+import EditorPageComponent from './file-editor/EditorPageComponent'
 import createStore from 'store';
 import RootStore from 'store/RootStore';
 import StoreProvider from 'store/StoreProvider';

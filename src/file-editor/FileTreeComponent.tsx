@@ -1,7 +1,7 @@
 import React from 'react';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
-import useStore from 'hooks/util/useStore';
+import useStore from 'hooks/util/UseStore';
 import { observer } from 'mobx-react';
 import { styled } from '@mui/system';
 

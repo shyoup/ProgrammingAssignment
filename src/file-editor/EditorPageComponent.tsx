@@ -4,7 +4,7 @@ import FileTreesCompoenent from './FileTreeComponent';
 import FileTabsCompoenent from './FileTabsComponent';
 import { observer } from 'mobx-react';
 import MonacoEditorComponent from './MonacoEditorComponent';
-import useStore from 'hooks/util/useStore';
+import useStore from 'hooks/util/UseStore';
 import { FILE_TYPE } from 'store/File';
 import ImageViewerComponent from './ImageViewerComponent';
 

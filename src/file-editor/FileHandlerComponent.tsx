@@ -1,5 +1,5 @@
 import React from 'react';
-import useStore from 'hooks/util/useStore';
+import useStore from 'hooks/util/UseStore';
 
 interface Props {
   children?: React.ReactNode;

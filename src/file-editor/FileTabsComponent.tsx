@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tab, Tabs } from '@mui/material'
-import useStore from 'hooks/util/useStore';
+import useStore from 'hooks/util/UseStore';
 import { observer } from 'mobx-react';
 import CloseButtonComponent from 'common/CloseButtonComponent';
 

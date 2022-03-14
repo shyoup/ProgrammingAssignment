@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import useStore from 'hooks/util/useStore';
+import useStore from 'hooks/util/UseStore';
 import { ImageModel } from 'store/File';
 import { observer } from 'mobx-react';
 

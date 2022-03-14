@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as monaco from 'monaco-editor';
-import useStore from 'hooks/util/useStore';
+import useStore from 'hooks/util/UseStore';
 import { FileModel } from 'store/File';
 
 const MonacoEditorComponent: React.FC = () => {
