@@ -36,8 +36,8 @@ const FileHandlerCompoenent: React.FC<Props> = (prop: Props) => {
         name="document"
         encType="multipart/form-data"
         method="post"
-        onSubmit={(event) => {
-          fileStore.onSubmit(file, event, tabStore.addList);
+        onSubmit={async (event) => {
+          await fileStore.onSubmit(file, event, tabStore.addList);
         }}
         ref={formElement}
       >
