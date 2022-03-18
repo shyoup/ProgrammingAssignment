@@ -39,7 +39,7 @@ export interface TreeInfo {
   children?: TreeInfo[];
 }
 
-export const FileTreesCompoenent: React.FC = () => {
+export const FileTreesComponent: React.FC = () => {
   const { fileStore, tabStore } = useStore();
   const renderTree = (nodes: TreeInfo, depth: number) => (
     <StyledTreeItem
@@ -79,11 +79,11 @@ export const FileTreesCompoenent: React.FC = () => {
         })}
         {fileStore.getFilesList().map(info => {
           if (!info.name.includes('/')) {
-            return <StyledTreeItem nodeId={info.id} depthPadding={0} iconVisibility={'hidden'} label={info.name} />
+            return <StyledTreeItem key={info.id} nodeId={info.id} depthPadding={0} iconVisibility={'hidden'} label={info.name} />
           }
         })}
       </StyledTreeView>
     </div>
   );
 };
-export default observer(FileTreesCompoenent);
+export default observer(FileTreesComponent);

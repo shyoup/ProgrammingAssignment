@@ -1,6 +1,6 @@
 import React from 'react';
 import FileHandlerCompoenent from './FileHandlerComponent';
-import FileTreesCompoenent from './FileTreeComponent';
+import FileTreesComponent from './FileTreeComponent';
 import FileTabsCompoenent from './FileTabsComponent';
 import { observer } from 'mobx-react';
 import MonacoEditorComponent from './MonacoEditorComponent';
@@ -16,7 +16,7 @@ const EditorPageComponent: React.FC = () => {
         <FileTabsCompoenent />
       </FileHandlerCompoenent>
       <div className="App-contents">
-        <FileTreesCompoenent />
+        <FileTreesComponent />
         {tabStore.getCurTab() && fileStore.getOpenedFileType() === FILE_TYPE.TEXT && <MonacoEditorComponent />}
         {tabStore.getCurTab() && fileStore.getOpenedFileType() === FILE_TYPE.IMAGE && <ImageViewerComponent id={tabStore.getCurTab()} />}
       </div>
