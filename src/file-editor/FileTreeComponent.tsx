@@ -11,15 +11,15 @@ const StyledTreeView = styled(TreeView)({
 
 type InputProps = {
   depthpadding: number;
-  iconVisibility: string;
+  iconvisibility: string;
 };
 
-const StyledTreeItem = styled(TreeItem)<InputProps>(({ depthpadding, iconVisibility }) => ({
+const StyledTreeItem = styled(TreeItem)<InputProps>(({ depthpadding, iconvisibility }) => ({
   [`& .MuiTreeItem-content`]: {
     color: 'white',
     fontSize: '14px',
     [`& .MuiTreeItem-iconContainer`]: {
-      visibility: iconVisibility,
+      visibility: iconvisibility,
       marginLeft: `${depthpadding}px`,
       backgroundColor: 'white',
       width: '12px',
@@ -43,7 +43,7 @@ export const FileTreesComponent: React.FC = () => {
   const { fileStore, tabStore } = useStore();
   const renderTree = (nodes: TreeInfo, depth: number) => (
     <StyledTreeItem
-      iconVisibility={Array.isArray(nodes.children) ? 'visible' : 'hidden'}
+      iconvisibility={Array.isArray(nodes.children) ? 'visible' : 'hidden'}
       key={nodes.id}
       nodeId={nodes.id}
       label={
@@ -79,7 +79,7 @@ export const FileTreesComponent: React.FC = () => {
         })}
         {fileStore.getFilesList().map(info => {
           if (!info.name.includes('/')) {
-            return <StyledTreeItem key={info.id} nodeId={info.id} depthpadding={0} iconVisibility={'hidden'} label={info.name} />
+            return <StyledTreeItem key={info.id} nodeId={info.id} depthpadding={0} iconvisibility={'hidden'} label={info.name} />
           }
         })}
       </StyledTreeView>
