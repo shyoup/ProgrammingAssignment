@@ -228,10 +228,10 @@ class FileStore {
         this.setOpenedFileType(FILE_TYPE.TEXT);
         const model = file.getModel();
         this.editor?.setModel(model);
-        document.getElementsByClassName("Editor")[0].classList.remove("hide");
+        document.getElementsByClassName("Editor")[0]?.classList.remove("hide");
       } else {
         this.setOpenedFileType(FILE_TYPE.IMAGE);
-        document.getElementsByClassName("Editor")[0].classList.add("hide");
+        document.getElementsByClassName("Editor")[0]?.classList.add("hide");
       }
     }
   }
